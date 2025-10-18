@@ -107,14 +107,15 @@ namespace WebApi_Estudo.Service.FuncionarioService
             return serviceResponse;
         }
 
-
         //ok
         public async Task<ServiceResponse<List<FuncionarioModel>>> InativaFuncionario(int id)
         {
+
+            
             ServiceResponse<List<FuncionarioModel>> serviceResponse = new ServiceResponse<List<FuncionarioModel>>();
             try
             {
-                var funcionario = await _context.Funcionarios.FindAsync(id);
+                FuncionarioModel funcionario = _context.Funcionarios.FirstOrDefault(f => f.Id == id);
                 if (funcionario == null)
                 {
                     serviceResponse.Message = "Funcionário não encontrado";

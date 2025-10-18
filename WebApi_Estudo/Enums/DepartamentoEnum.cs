@@ -1,13 +1,17 @@
-﻿namespace WebApi_Estudo.Enums
+﻿using System.Text.Json.Serialization;
+
+namespace WebApi_Estudo.Enums
 {
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum DepartamentoEnum
     {
 
-    Rh = 10,
-    Financeiro = 20,
-    Compras = 25,
-    Atendimento = 30,
-    Zeladoria = 40,
-    Estagiario = 50
+    Rh,
+    Financeiro,
+    Compras,
+    Atendimento,
+    Zeladoria,
+    Estagiario
     }
 }

@@ -39,13 +39,13 @@ namespace WebApi_Estudo.Controllers
             return Ok(await _funcionarioInterface.DeleteFucionarioById(id));
         }
 
-        [HttpPatch("inativa/{id}")]
+        [HttpPut("inativa/{id}")]
         public async Task<ActionResult<ServiceResponse<List<FuncionarioModel>>>> InativaFuncionario(int id)
         {
             return Ok(await _funcionarioInterface.InativaFuncionario(id));
         }
 
-        [HttpPatch("reativa/{id}")]
+        [HttpPut("reativa/{id}")]
         public async Task<ActionResult<ServiceResponse<List<FuncionarioModel>>>> ReativaFuncionario(int id)
         {
             return Ok(await _funcionarioInterface.RetivaFuncionario(id));
