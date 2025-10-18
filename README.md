@@ -40,7 +40,6 @@ A arquitetura adota uma estrutura simples, porém escalável:
 
 Todas as respostas seguem um formato consistente, garantindo clareza e padronização na comunicação entre backend e clientes:
 
-```json
 {
   "data": ...,
   "success": true|false,
