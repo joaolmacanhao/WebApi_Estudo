@@ -27,5 +27,28 @@ namespace WebApi_Estudo.Controllers
             return Ok (await _funcionarioInterface.CreatFucionarios(novoFuncionario));
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ServiceResponse<FuncionarioModel>>> GetFuncionarioById(int id)
+        {
+            return Ok(await _funcionarioInterface.GetFuncionarioById(id));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ServiceResponse<List<FuncionarioModel>>>> DeleteFuncionarioById(int id)
+        {
+            return Ok(await _funcionarioInterface.DeleteFucionarioById(id));
+        }
+
+        [HttpPatch("inativa/{id}")]
+        public async Task<ActionResult<ServiceResponse<List<FuncionarioModel>>>> InativaFuncionario(int id)
+        {
+            return Ok(await _funcionarioInterface.InativaFuncionario(id));
+        }
+
+        [HttpPatch("reativa/{id}")]
+        public async Task<ActionResult<ServiceResponse<List<FuncionarioModel>>>> ReativaFuncionario(int id)
+        {
+            return Ok(await _funcionarioInterface.RetivaFuncionario(id));
+        }
     }
 }
