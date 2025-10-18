@@ -1,5 +1,3 @@
-Perfeito! Aqui está o README completo, em um único bloco, pronto para copiar e colar:
-
 # WebApi_Estudo
 
 > 🚧 Projeto em desenvolvimento — será expandido para incluir **backend completo (API)** e **frontend (interface web)**.  
