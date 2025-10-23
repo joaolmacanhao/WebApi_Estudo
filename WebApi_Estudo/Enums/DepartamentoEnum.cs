@@ -7,11 +7,11 @@ namespace WebApi_Estudo.Enums
     public enum DepartamentoEnum
     {
 
-    Rh,
-    Financeiro,
-    Compras,
-    Atendimento,
-    Zeladoria,
-    Estagiario
+    Rh = 10,
+    Financeiro = 20,
+    Compras = 30,
+    Atendimento = 40,
+    Zeladoria = 50,
+    Estagiario = 60
     }
 }

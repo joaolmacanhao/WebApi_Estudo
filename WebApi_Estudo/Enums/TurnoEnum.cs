@@ -5,8 +5,8 @@ namespace WebApi_Estudo.Enums
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum TurnoEnum
     {
-        Matutino,
-        Vespertino,
-        Noturno
+        Matutino = 10,
+        Vespertino = 20,
+        Noturno = 30
     }
 }

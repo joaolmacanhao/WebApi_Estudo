@@ -15,7 +15,7 @@ namespace WebApi_Estudo.Migrations
                 name: "Funcionarios",
                 columns: table => new
 
-                //ljhflkgwhvo;itrh
+                
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
