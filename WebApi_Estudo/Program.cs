@@ -25,6 +25,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 // DI: seu service
 builder.Services.AddScoped<IFuncionarioInterface, FuncionarioService>();
 
