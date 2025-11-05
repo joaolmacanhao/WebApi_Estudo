@@ -40,131 +40,209 @@ Ela implementa:
 
 ---
 
-## 🧾 Estrutura de resposta
-
-Todas as respostas seguem um formato consistente, garantindo clareza e padronização na comunicação entre backend e clientes:
-
-```json
-{
-  "data": ...,
-  "success": true,
-  "message": "mensagem informativa"
-}
-
 # WebApi_Estudo — Guia de instalação e execução (PT-BR)
 
-Esta seção descreve, passo a passo, como baixar, configurar e executar o projeto WebApi_Estudo em uma máquina que só tem uma IDE (Visual Studio 2022) instalada. Inclui configuração do banco (SQL Server / LocalDB), migrações EF Core e instalação/configuração do FastReport (OpenSource).
+Esta seção descreve, passo a passo, como baixar, configurar e executar o projeto **WebApi_Estudo** em uma máquina que só tem uma IDE (Visual Studio 2022) instalada. Inclui configuração do banco (SQL Server / LocalDB), migrações EF Core e instalação/configuração do **FastReport (OpenSource)**.
 
-Pré-requisitos
-- Windows (ou outro SO compatível com .NET 6)
-- Visual Studio 2022 com workload ".NET desktop development" e "ASP.NET and web development"
-- .NET 6 SDK instalado (confirme com: dotnet --version)
-- Git (ou usar o clone pela IDE)
+---
+
+## 🧰 Pré-requisitos
+
+- Windows (ou outro SO compatível com .NET 6)  
+- Visual Studio 2022 com workloads:
+  - **.NET desktop development**
+  - **ASP.NET and web development**
+- .NET 6 SDK instalado → confirme com:  
+  ```bash
+  dotnet --version
+  ```
+- Git (ou use o clone pela IDE)
 - SQL Server (Express / LocalDB / Developer) ou acesso a um servidor SQL
 - (Opcional) SQL Server Management Studio (SSMS) para gerenciar o banco
 
-1) Clonar o repositório
-- Pela linha de comando:
-  git clone https://github.com/joaolmacanhao/WebApi_Estudo.git
-- Ou: __File > Open > Project/Solution__ no Visual Studio e colar a URL no diálogo de clone.
+---
 
-2) Abrir solução no Visual Studio
-- Abra a solução (sln) dentro da pasta clonada.
-- No Solution Explorer, selecione WebApi_Estudo como projeto inicial (Set as Startup Project).
+## 1️⃣ Clonar o repositório
 
-3) Pacotes NuGet necessários
-No Visual Studio: __Tools > NuGet Package Manager > Package Manager Console__ ou gerencie via UI em _Dependencies > NuGet_.
+Via terminal:
+```bash
+git clone https://github.com/joaolmacanhao/WebApi_Estudo.git
+```
 
-Pacotes recomendados (adicionar se não existirem):
-- Microsoft.EntityFrameworkCore.SqlServer
-- Microsoft.EntityFrameworkCore.Tools
-- FastReport.OpenSource
-- FastReport.OpenSource.Web
-- FastReport.OpenSource.Export.PdfSimple
-- FastReport.OpenSource.Data.MsSql
+Ou via Visual Studio:  
+**File > Open > Project/Solution** e cole a URL no diálogo de clone.
 
-Com dotnet CLI (opcional — no diretório do projeto):
+---
+
+## 2️⃣ Abrir a solução no Visual Studio
+
+- Abra o arquivo `.sln` dentro da pasta clonada.  
+- No **Solution Explorer**, clique com o botão direito em `WebApi_Estudo` →  
+  **Set as Startup Project**
+
+---
+
+## 3️⃣ Instalar os pacotes NuGet necessários
+
+Abra no Visual Studio:  
+**Tools > NuGet Package Manager > Package Manager Console**  
+ou adicione via **Dependencies > Manage NuGet Packages**.
+
+Pacotes essenciais:
+```bash
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Tools
+FastReport.OpenSource
+FastReport.OpenSource.Web
+FastReport.OpenSource.Export.PdfSimple
+FastReport.OpenSource.Data.MsSql
+```
+
+Ou instale via CLI:
+```bash
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package FastReport.OpenSource
 dotnet add package FastReport.OpenSource.Web
 dotnet add package FastReport.OpenSource.Export.PdfSimple
 dotnet add package FastReport.OpenSource.Data.MsSql
+```
 
-Instale a ferramenta EF Core (se não tiver):
+Instale a ferramenta global do EF Core (se necessário):
+```bash
 dotnet tool install --global dotnet-ef
+```
 
-4) Configurar connection string
-Edite o arquivo appsettings.Development.json / appsettings.json do projeto WebApi_Estudo e defina a chave "ConnectionStrings:DefaultConnection". Exemplo:
+---
 
+## 4️⃣ Configurar a Connection String
+
+Edite o arquivo `appsettings.Development.json` **ou** `appsettings.json`:
+
+```json
 {
   "ConnectionStrings": {
     "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=WebApi_Estudo_Db;Trusted_Connection=True;MultipleActiveResultSets=true"
   },
   "Reports": {
-    "ReportsPath": "Reports" // Sugestão: pasta dentro do projeto
+    "ReportsPath": "Reports"
   }
 }
+```
 
-Observações:
-- Para SQL Server local: use (localdb)\mssqllocaldb ou .\SQLEXPRESS conforme instalado.
-- Se usar credenciais, substitua Trusted_Connection=True por User ID=...;Password=...;
+**Observações:**
+- Para SQL Server local use `(localdb)\\mssqllocaldb` ou `.\SQLEXPRESS`.
+- Se usar login/senha, substitua `Trusted_Connection=True` por:
+  ```
+  User ID=seuUsuario;Password=suaSenha;
+  ```
 
-5) Migrations / Criar/Atualizar banco
-Se o projeto já inclui migrations (ver pasta Migrations), aplique-as:
+---
 
-Pelo Package Manager Console no Visual Studio (Default project: WebApi_Estudo):
+## 5️⃣ Executar migrações e criar banco
+
+Se já existir a pasta `Migrations`, apenas atualize o banco:
+
+No **Package Manager Console** (default project: WebApi_Estudo):
+```bash
 Update-Database
+```
 
-Ou com dotnet CLI:
+Ou via CLI:
+```bash
 dotnet ef database update --project WebApi_Estudo --startup-project WebApi_Estudo
+```
 
-Se precisar criar nova migration:
+Criar nova migration (se necessário):
+```bash
 dotnet ef migrations add NomeDaMigration --project WebApi_Estudo --startup-project WebApi_Estudo
+```
 
-6) Configurar FastReport (.frx)
-- Crie uma pasta no projeto para relatórios, ex: /Reports
-- Coloque o arquivo .frx (ex: ListagemFuncionarios.frx) dentro desta pasta.
-- Marque o arquivo .frx como "Copy to Output Directory" = "Copy if newer" (clicar no arquivo no Solution Explorer > Properties).
-- No controller atual o caminho é absoluto. Recomendo usar configuração via appsettings e ContentRootPath, ex:
-  - Defina Reports:ReportsPath no appsettings (ver acima).
-  - No controller, construa o caminho usando IHostEnvironment.ContentRootPath + configuration key (opcional: eu posso gerar o snippet se quiser).
+---
 
-7) Permissões e acesso ao arquivo .frx
-- Se usar caminho absoluto (C:\...), verifique permissões de leitura.
-- Preferível manter os .frx dentro do projeto (Reports) para facilitar deploy e CI.
+## 6️⃣ Configurar FastReport (.frx)
 
-8) Execução (local)
-- Pelo Visual Studio: F5 (IIS Express) ou Ctrl+F5 (sem debug).
-- Ou pela CLI, na pasta do projeto:
-  dotnet run --project WebApi_Estudo
+- Crie uma pasta no projeto chamada `/Reports`
+- Coloque o arquivo `.frx` (ex: `ListagemFuncionarios.frx`) dentro dela.
+- Propriedade do arquivo: **Copy to Output Directory = Copy if newer**
+- Recomenda-se definir o caminho via `appsettings` e não hardcoded.
 
-A API estará acessível em http://localhost:{porta} (veja output do run/launchSettings.json).
+Exemplo de uso via configuração:
+- Defina `Reports:ReportsPath` no appsettings.
+- No controller, combine `IHostEnvironment.ContentRootPath` + caminho configurado.
 
-9) Endpoints úteis (presentes no controller FuncionarioController)
-- GET    /api/Funcionario             — listar
-- GET    /api/Funcionario/{id}        — obter por id
-- POST   /api/Funcionario             — criar
-- DELETE /api/Funcionario/{id}        — deletar
-- PUT    /api/Funcionario/inativa/{id} — inativar
-- PUT    /api/Funcionario/reativa/{id} — reativar
-- GET    /api/Funcionario/relatorio   — gera PDF com FastReport (retorna application/pdf)
+---
 
-10) CORS
-- Projeto já inclui política "FrontendDev" para http://localhost:4200. Se usar outra origem, altere em Program.cs.
-- Se liberar credenciais (cookies) use .AllowCredentials() e não use .AllowAnyOrigin() ao mesmo tempo.
+## 7️⃣ Permissões e acesso ao arquivo .frx
 
-11) Debug e problemas comuns
-- Erro "Cannot modify ServiceCollection after application is built.": verifique se não há chamadas builder.Services.Add* após var app = builder.Build(); (todos os Add devem ficar antes do Build()).
-- Erros EF: confirme connection string, execute Update-Database, verifique se o usuário do banco tem permissões.
-- FastReport: se faltar pacote, instale os pacotes OpenSource correspondentes. Se for versão comercial, siga instruções de licenciamento do fornecedor.
-- Caminho do .frx não encontrado: verifique se o arquivo foi copiado para output (bin) e se o controller monta o caminho corretamente.
+- Se usar caminho absoluto (C:\...), verifique permissões de leitura.  
+- Ideal manter os `.frx` **dentro do projeto** para facilitar deploy e CI/CD.
 
-12) Deploy básico
-- Para publicar: __Build > Publish__ no Visual Studio e escolha destino (Azure, Folder, IIS).
-- Garanta que a connection string de produção esteja correta e que os arquivos .frx estejam incluídos no publish.
+---
 
-Exemplo mínimo de appsettings.json (copiar e ajustar):
+## 8️⃣ Executar localmente
+
+Pelo Visual Studio:  
+- `F5` (IIS Express) ou `Ctrl+F5` (sem debug).
+
+Ou via terminal:
+```bash
+dotnet run --project WebApi_Estudo
+```
+
+A API estará disponível em:  
+👉 http://localhost:{porta}  
+(verifique `launchSettings.json` para confirmar a porta).
+
+---
+
+## 9️⃣ Endpoints principais (FuncionarioController)
+
+| Método | Endpoint | Descrição |
+|---------|-----------|-----------|
+| GET | /api/Funcionario | Lista todos os funcionários |
+| GET | /api/Funcionario/{id} | Retorna funcionário por ID |
+| POST | /api/Funcionario | Cria novo funcionário |
+| DELETE | /api/Funcionario/{id} | Remove funcionário |
+| PUT | /api/Funcionario/inativa/{id} | Inativa funcionário |
+| PUT | /api/Funcionario/reativa/{id} | Reativa funcionário |
+| GET | /api/Funcionario/relatorio | Gera relatório PDF (FastReport) |
+
+---
+
+## 🔒 10) CORS
+
+- Já existe a política `FrontendDev` permitindo `http://localhost:4200`.  
+- Se mudar o front-end, ajuste em `Program.cs`.
+- Para usar cookies, utilize `.AllowCredentials()` e **não** `.AllowAnyOrigin()`.
+
+---
+
+## 🧩 11) Debug e erros comuns
+
+- ❗ *Erro:* `Cannot modify ServiceCollection after application is built.`  
+  ➜ Corrija chamadas `builder.Services.Add*` colocadas após `builder.Build()`.
+
+- ⚙️ *Erro EF Core:* verifique connection string, execute `Update-Database`, e confira permissões do banco.
+
+- 📄 *Erro FastReport:* instale pacotes OpenSource. Se usar versão comercial, siga o licenciamento do fornecedor.
+
+- 📁 *Erro de caminho .frx:* verifique se o arquivo foi copiado para `bin` e se o controller monta o caminho com `ContentRootPath`.
+
+---
+
+## 🚀 12) Deploy básico
+
+No Visual Studio:  
+**Build > Publish** → escolha destino (Azure, Pasta, IIS).
+
+Verifique:
+- Connection string correta no ambiente de produção.
+- Arquivos `.frx` incluídos na publicação.
+
+Exemplo mínimo de `appsettings.json`:
+
+```json
 {
   "ConnectionStrings": {
     "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=WebApi_Estudo_Db;Trusted_Connection=True;MultipleActiveResultSets=true"
@@ -179,4 +257,9 @@ Exemplo mínimo de appsettings.json (copiar e ajustar):
     }
   }
 }
+```
 
+---
+
+📘 **Autor:** [João L. Macanhão](https://github.com/joaolmacanhao)  
+🗓️ **Última atualização:** Novembro/2025
