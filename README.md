@@ -53,7 +53,7 @@ Todas as respostas seguem um formato consistente, garantindo clareza e padroniza
 
 # WebApi_Estudo — Guia de instalação e execução (PT-BR)
 
-Este README descreve, passo a passo, como baixar, configurar e executar o projeto WebApi_Estudo em uma máquina que só tem uma IDE (Visual Studio 2022) instalada. Inclui configuração do banco (SQL Server / LocalDB), migrações EF Core e instalação/configuração do FastReport (OpenSource).
+Esta seção descreve, passo a passo, como baixar, configurar e executar o projeto WebApi_Estudo em uma máquina que só tem uma IDE (Visual Studio 2022) instalada. Inclui configuração do banco (SQL Server / LocalDB), migrações EF Core e instalação/configuração do FastReport (OpenSource).
 
 Pré-requisitos
 - Windows (ou outro SO compatível com .NET 6)
@@ -180,8 +180,3 @@ Exemplo mínimo de appsettings.json (copiar e ajustar):
   }
 }
 
-Ajuda adicional
-- Quer que eu gere um snippet para o controller usar a configuração Reports:ReportsPath com IHostEnvironment? (posso gerar o código e alterar o controller para buscar o relatório pelo path relativo do projeto).
-- Posso também gerar um arquivo README mais curto com checklist imprimível.
-
-Fim.
